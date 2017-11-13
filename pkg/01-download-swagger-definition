@@ -1,0 +1,5 @@
+#!/bin/sh -e
+
+wget -O api-raw.json https://quay.io/api/v1/discovery
+python -m json.tool < api-raw.json > api.json
+rm -f api-raw.json
