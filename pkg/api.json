@@ -12,13 +12,9 @@
                     "description": "The media type for this label",
                     "enum": [
                         "text/plain",
-                        "application/json",
-                        null
+                        "application/json"
                     ],
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "type": "string"
                 },
                 "value": {
                     "description": "The value for the label",
@@ -321,13 +317,9 @@
                     "description": "The kind of repository",
                     "enum": [
                         "image",
-                        "application",
-                        null
+                        "application"
                     ],
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "type": "string"
                 },
                 "repository": {
                     "description": "Repository name",
