@@ -202,6 +202,38 @@
             },
             "type": "object"
         },
+        "ListRepos": {
+            "description": "Response body of a successful listRepos.",
+            "properties": {
+                "repositories": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "kind": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "namespace": {
+                                "type": "string"
+                            },
+                            "is_public": {
+                                "type": "boolean"
+                            },
+                            "is_starred": {
+                                "type": "boolean"
+                            },
+                            "description": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        },
         "NewApp": {
             "description": "Description of a new organization application.",
             "properties": {
@@ -3674,7 +3706,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful invocation"
+                        "description": "Successful invocation",
+                        "schema": {
+                            "$ref": "#/definitions/ListRepos"
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
