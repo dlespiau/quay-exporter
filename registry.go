@@ -54,6 +54,14 @@ func (r *Registry) ListRepositories(namespace string) (models.ListReposRepositor
 	kind := "image"
 	params.RepoKind = &kind
 
+	// If we don't have a token, just ask for public images. If we try to ask for
+	// public & private images without a token, the API returns an empty list of
+	// repositories.
+	if r.token == "" {
+		public := true
+		params.Public = &public
+	}
+
 	response, err := r.client.Repository.ListRepos(params, r.getAuth())
 	if err != nil {
 		return nil, err
