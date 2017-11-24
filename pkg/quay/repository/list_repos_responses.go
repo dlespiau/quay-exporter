@@ -75,13 +75,21 @@ func NewListReposOK() *ListReposOK {
 Successful invocation
 */
 type ListReposOK struct {
+	Payload *models.ListRepos
 }
 
 func (o *ListReposOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/repository][%d] listReposOK ", 200)
+	return fmt.Sprintf("[GET /api/v1/repository][%d] listReposOK  %+v", 200, o.Payload)
 }
 
 func (o *ListReposOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ListRepos)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }
