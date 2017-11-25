@@ -27,4 +27,13 @@ func main() {
 	for _, repository := range repositories {
 		fmt.Printf("%s/%s\n", repository.Namespace, repository.Name)
 	}
+
+	info, err := registry.GetRepository("weaveworks/ui-server")
+	if err != nil {
+		log.Fatal(err)
+	}
+	latest, ok := info.Tags["latest"]
+	if ok {
+		fmt.Println(latest.ManifestDigest)
+	}
 }

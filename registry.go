@@ -16,6 +16,8 @@ const (
 	quayHost   = "quay.io"
 	quayPath   = "/"
 	quayScheme = "https"
+
+	DefaultTimeout = 10 * time.Second
 )
 
 // Registry is an Docker image registry.
@@ -49,7 +51,7 @@ func (r *Registry) getAuth() runtime.ClientAuthInfoWriter {
 // given namespace.
 func (r *Registry) ListRepositories(namespace string) (models.ListReposRepositories, error) {
 
-	params := repository.NewListReposParamsWithTimeout(10 * time.Second)
+	params := repository.NewListReposParamsWithTimeout(DefaultTimeout)
 	params.Namespace = &namespace
 	kind := "image"
 	params.RepoKind = &kind
@@ -67,4 +69,17 @@ func (r *Registry) ListRepositories(namespace string) (models.ListReposRepositor
 		return nil, err
 	}
 	return response.Payload.Repositories, nil
+}
+
+// GetRepository returns details about the specified repository. repositorySpec
+// is of the form $namespace/$repository.
+func (r *Registry) GetRepository(repositorySpec string) (*models.GetRepo, error) {
+	params := repository.NewGetRepoParamsWithTimeout(DefaultTimeout)
+	params.Repository = repositorySpec
+
+	response, err := r.client.Repository.GetRepo(params, r.getAuth())
+	if err != nil {
+		return nil, err
+	}
+	return response.Payload, nil
 }
