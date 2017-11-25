@@ -75,13 +75,21 @@ func NewGetRepoOK() *GetRepoOK {
 Successful invocation
 */
 type GetRepoOK struct {
+	Payload *models.GetRepo
 }
 
 func (o *GetRepoOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/repository/{repository}][%d] getRepoOK ", 200)
+	return fmt.Sprintf("[GET /api/v1/repository/{repository}][%d] getRepoOK  %+v", 200, o.Payload)
 }
 
 func (o *GetRepoOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.GetRepo)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }
