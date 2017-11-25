@@ -14,12 +14,12 @@ func main() {
 	quayToken := flag.String("quay-token", "", "Quay.io OAuth 2 Bearer Token")
 	flag.Parse()
 
-	repository := NewRegistry()
+	registry := NewRegistry()
 	if *quayToken != "" {
-		repository.SetBearerToken(*quayToken)
+		registry.SetBearerToken(*quayToken)
 	}
 
-	repositories, err := repository.ListRepositories("weaveworks")
+	repositories, err := registry.ListRepositories("weaveworks")
 	if err != nil {
 		log.Fatal(err)
 	}
