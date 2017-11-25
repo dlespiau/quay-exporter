@@ -202,6 +202,71 @@
             },
             "type": "object"
         },
+        "GetRepo": {
+            "description": "Response body of a successful getRepo.",
+            "properties": {
+                "can_admin": {
+                    "type": "boolean"
+                },
+                "can_write": {
+                    "type": "boolean"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "is_organization": {
+                    "type": "boolean"
+                },
+                "is_public": {
+                    "type": "boolean"
+                },
+                "is_starred": {
+                    "type": "boolean"
+                },
+                "kind": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "namespace": {
+                    "type": "string"
+                },
+                "status_token": {
+                    "type": "string"
+                },
+                "tag_expiration_s": {
+                    "type": "number"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object",
+                        "properties" : {
+                            "image_id": {
+                                "type": "string"
+                            },
+                            "last_modififed": {
+                                "type": "string"
+                            },
+                            "manifest_digest": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "size": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                },
+                "trust_enabled": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
         "ListRepos": {
             "description": "Response body of a successful listRepos.",
             "properties": {
@@ -3879,7 +3944,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful invocation"
+                        "description": "Successful invocation",
+                        "schema" : {
+                            "$ref": "#/definitions/GetRepo"
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
