@@ -75,13 +75,21 @@ func NewGetRepoImageSecurityOK() *GetRepoImageSecurityOK {
 Successful invocation
 */
 type GetRepoImageSecurityOK struct {
+	Payload *models.ImageSecurity
 }
 
 func (o *GetRepoImageSecurityOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/repository/{repository}/image/{imageid}/security][%d] getRepoImageSecurityOK ", 200)
+	return fmt.Sprintf("[GET /api/v1/repository/{repository}/image/{imageid}/security][%d] getRepoImageSecurityOK  %+v", 200, o.Payload)
 }
 
 func (o *GetRepoImageSecurityOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ImageSecurity)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }
