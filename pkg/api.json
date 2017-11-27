@@ -397,6 +397,38 @@
             },
             "type": "object"
         },
+        "ListRepoTags": {
+            "description": "Response body of a successful listRepoTags.",
+            "properties": {
+                "has_additional": {
+                    "type": "boolean"
+                },
+                "page": {
+                    "type": "number"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "reversion": {
+                                "type": "boolean"
+                            },
+                            "manifest_digest": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "docker_image_id": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        },
         "NewApp": {
             "description": "Description of a new organization application.",
             "properties": {
@@ -6692,7 +6724,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful invocation"
+                        "description": "Successful invocation",
+                        "schema": {
+                            "$ref": "#/definitions/ListRepoTags"
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
