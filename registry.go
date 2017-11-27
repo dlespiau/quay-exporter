@@ -10,6 +10,7 @@ import (
 	"github.com/dlespiau/quay-exporter/pkg/models"
 	"github.com/dlespiau/quay-exporter/pkg/quay"
 	"github.com/dlespiau/quay-exporter/pkg/quay/repository"
+	"github.com/dlespiau/quay-exporter/pkg/quay/secscan"
 )
 
 const (
@@ -71,13 +72,31 @@ func (r *Registry) ListRepositories(namespace string) (models.ListReposRepositor
 	return response.Payload.Repositories, nil
 }
 
-// GetRepository returns details about the specified repository. repositorySpec
-// is of the form $namespace/$repository.
+// GetRepository returns details about the specified repository.
+// repositorySpec is of the form $namespace/$repository.
 func (r *Registry) GetRepository(repositorySpec string) (*models.GetRepo, error) {
 	params := repository.NewGetRepoParamsWithTimeout(DefaultTimeout)
 	params.Repository = repositorySpec
 
 	response, err := r.client.Repository.GetRepo(params, r.getAuth())
+	if err != nil {
+		return nil, err
+	}
+	return response.Payload, nil
+}
+
+// GetVulnerabilities returns the list of known vulnerabilities for the given
+// image.
+// repositorySpec is of the form $namespace/$repository.
+// imageID is obtained from GetRepository().
+func (r *Registry) GetVulnerabilities(repositorySpec string, imageID string) (*models.ImageSecurity, error) {
+	params := secscan.NewGetRepoImageSecurityParamsWithTimeout(DefaultTimeout)
+	params.Repository = repositorySpec
+	params.Imageid = imageID
+	vulnerabilities := true
+	params.Vulnerabilities = &vulnerabilities
+
+	response, err := r.client.Secscan.GetRepoImageSecurity(params, r.getAuth())
 	if err != nil {
 		return nil, err
 	}
