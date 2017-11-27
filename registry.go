@@ -11,6 +11,7 @@ import (
 	"github.com/dlespiau/quay-exporter/pkg/quay"
 	"github.com/dlespiau/quay-exporter/pkg/quay/repository"
 	"github.com/dlespiau/quay-exporter/pkg/quay/secscan"
+	"github.com/dlespiau/quay-exporter/pkg/quay/tag"
 )
 
 const (
@@ -97,6 +98,26 @@ func (r *Registry) GetVulnerabilities(repositorySpec string, imageID string) (*m
 	params.Vulnerabilities = &vulnerabilities
 
 	response, err := r.client.Secscan.GetRepoImageSecurity(params, r.getAuth())
+	if err != nil {
+		return nil, err
+	}
+	return response.Payload, nil
+}
+
+// GetTags returns the list of tags for this repositorySpec. The results are
+// sorted by date, most recent first and are paginated.
+// repositorySpec is of the form $namespace/$repository.
+// page is the number of the requested page (first page is 1).
+// limit is the number of items to return.
+func (r *Registry) GetTags(repositorySpec string, page, limit int) (*models.ListRepoTags, error) {
+	params := tag.NewListRepoTagsParamsWithTimeout(DefaultTimeout)
+	params.Repository = repositorySpec
+	page64 := int64(page)
+	params.Page = &page64
+	limit64 := int64(limit)
+	params.Limit = &limit64
+
+	response, err := r.client.Tag.ListRepoTags(params, r.getAuth())
 	if err != nil {
 		return nil, err
 	}
