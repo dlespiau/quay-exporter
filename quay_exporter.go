@@ -117,21 +117,19 @@ func scanRepository(registry *Registry, namespace, repository string) {
 	})
 	repositorySpec := namespace + "/" + repository
 
-	log.Debug("scanning repository")
-
-	info, err := registry.GetRepository(repositorySpec)
+	tags, err := registry.GetTags(repositorySpec, 1, 1)
 	if err != nil {
 		log.Warn(err)
 		return
 	}
-
-	latest, ok := info.Tags["latest"]
-	if !ok {
-		log.Warn("couldn't find a 'latest' tag")
+	if len(tags.Tags) == 0 {
+		log.Warn("couldn't find any tag")
 		return
 	}
 
-	vulnerabilities, err := registry.GetVulnerabilities(repositorySpec, latest.ImageID)
+	log.Debugf("fetching vulnerabilities for tag '%s'", tags.Tags[0].Name)
+
+	vulnerabilities, err := registry.GetVulnerabilities(repositorySpec, tags.Tags[0].DockerImageID)
 	if err != nil {
 		log.Warn(err)
 		return
