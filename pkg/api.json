@@ -267,6 +267,104 @@
             },
             "type": "object"
         },
+        "ImageSecurity": {
+            "description": "Response body of a successful v.",
+            "properties": {
+                "status": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "Layer": {
+                            "type": "object",
+                            "properties": {
+                                "Features": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "AddedBy": {
+                                                "type": "string"
+                                            },
+                                            "Name": {
+                                                "type": "string"
+                                            },
+                                            "NamespaceName": {
+                                                "type": "string"
+                                            },
+                                            "Version": {
+                                                "type": "string"
+                                            },
+                                            "VersionFormat": {
+                                                "type": "string"
+                                            },
+                                            "Vulnerabilities": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "FixedBy": {
+                                                            "type": "string"
+                                                        },
+                                                        "Link": {
+                                                            "type": "string"
+                                                        },
+                                                        "Metadata": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "NVD": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "CVSSv2": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "Score": {
+                                                                                    "type": "number"
+                                                                                },
+                                                                                "Vectors": {
+                                                                                    "type": "string"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "Name": {
+                                                            "type": "string"
+                                                        },
+                                                        "NamespaceName": {
+                                                            "type": "string"
+                                                        },
+                                                        "Severity": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "IndexedByVersion": {
+                                    "type": "number"
+                                },
+                                "Name": {
+                                    "type": "string"
+                                },
+                                "NamespaceName": {
+                                    "type": "string"
+                                },
+                                "ParentName": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        },
         "ListRepos": {
             "description": "Response body of a successful listRepos.",
             "properties": {
@@ -4904,7 +5002,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful invocation"
+                        "description": "Successful invocation",
+                        "schema": {
+                            "$ref": "#/definitions/ImageSecurity"
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
