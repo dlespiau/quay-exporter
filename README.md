@@ -11,7 +11,7 @@ To run the daemon locally, use:
 
 ```shell
 $ go get github.com/dlespiau/quay-exporter
-$ quay-exporter -log-level debug  weaveworks
+$ quay-exporter weaveworks
 ```
 
 `quay-exporter` can access private repositories when provided with an OAUTH 2
