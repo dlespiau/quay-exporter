@@ -7,6 +7,8 @@ published in that service.
 
 ## Install Instructions
 
+### Compiling from sources
+
 To run the daemon locally, use:
 
 ```shell
@@ -16,6 +18,14 @@ $ quay-exporter weaveworks
 
 `quay-exporter` can access private repositories when provided with an OAUTH 2
 bearer token using the `-quay-token` command line parameter.
+
+### Using the Docker image
+
+Using `quay-expoter` from the published Docker image is one command away:
+
+```shell
+docker run -p 8080:8080 quay.io/damien.lespiau/quay-exporter weaveworks
+```
 
 ## Visualize Metrics
 
