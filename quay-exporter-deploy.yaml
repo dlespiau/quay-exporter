@@ -1,0 +1,27 @@
+apiVersion: apps/v1beta2 # for Kubernetes < v1.8.0 use apps/v1beta1
+kind: Deployment
+metadata:
+  name: quay-exporter
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      name: quay-exporter
+  template:
+    metadata:
+      labels:
+        name: quay-exporter
+    spec:
+      containers:
+      - name: quay-exporter
+        image: quay.io/damien.lespiau/quay-exporter
+        args:
+        # Try 'debug' when troubleshooting.
+        - -log-level=info
+        # OAUTH 2 token if needed, eg. to scan private repositories.
+        - -quay-token=XXX
+        # The organisation you want to watch.
+        - weaveworks
+        ports:
+        - containerPort: 8080

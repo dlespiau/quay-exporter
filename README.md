@@ -27,6 +27,15 @@ Using `quay-expoter` from the published Docker image is one command away:
 docker run -p 8080:8080 quay.io/damien.lespiau/quay-exporter weaveworks
 ```
 
+### Deploying on Kubernetes
+
+A sample Deployment manifest is provided to deploy `quay-exporter` on a
+Kubernetes cluster:
+
+```shell
+kubectl -n monitoring apply -f quay-exporter-deploy.yaml
+```
+
 ## Visualize Metrics
 
 To view the available metrics, point your browser at `http://localhost:8080/metrics/`:
